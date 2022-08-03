@@ -24,7 +24,48 @@ Blockly.JavaScript['KB_ExtenV2_motor'] = function(block) {
   var dropdown_ch = block.getFieldValue('ch');
   var dropdown_dir = block.getFieldValue('dir');
   var value_speed = Blockly.JavaScript.valueToCode(block, 'speed', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = 'motor(' + dropdown_ch + ', ' + dropdown_dir + ', ' + value_speed + ');\n';
+  //var code = 'motor(' + dropdown_ch + ', ' + dropdown_dir + ', ' + value_speed + ');\n';
+   var code = '';
+  if(dropdown_ch == '1'){
+    if(dropdown_dir == '1'){
+      code += `motor_control(6, ${value_speed} );\n`;
+    }
+    else if(dropdown_dir == '2'){
+      code += 'motor_control(8, ' + value_speed + ');\n';
+    }
+  }
+  if(dropdown_ch == '2'){
+    if(dropdown_dir == '1'){
+      code += `motor_control(7, ${value_speed} );\n`;
+    }
+    else if(dropdown_dir == '2'){
+      code += 'motor_control(9, ' + value_speed + ');\n';
+    }
+  }
+  
+  return code;
+};
+Blockly.JavaScript['KB_ExtenV2_motor2CH'] = function(block) {
+  var value_speedA = Blockly.JavaScript.valueToCode(block, 'speedA', Blockly.JavaScript.ORDER_ATOMIC) || 0;
+  var value_speedB = Blockly.JavaScript.valueToCode(block, 'speedB', Blockly.JavaScript.ORDER_ATOMIC) || 0;
+  let resultA = value_speedA.substring(0, 1);
+  let resultB = value_speedB.substring(0, 1);
+  //var code = 'motor(' + resultA + ', ' + value_speedB + ');\n';
+  var code = '';
+  if(resultA == '('){
+    code += `motor_control(8, ${value_speedA.split(")")} );\n`;
+  }
+  else if(resultA != '('){
+    code += 'motor_control(6, ' + value_speedA + ');\n';
+  }
+
+  if(resultB == '('){
+    code += 'motor_control(9, ' + value_speedB + ');\n';
+  }
+  else if(resultB != '('){
+    code += 'motor_control(7, ' + value_speedB + ');\n';
+  }
+  //var code = `${resultA}+++${resultB}`;
   return code;
 };
 Blockly.JavaScript['KB_ExtenV2_motor_move'] = function(block) {
@@ -120,10 +161,13 @@ Blockly.JavaScript['KB_ExtenV2_digital_Write'] = function(block) {
 Blockly.JavaScript['KB_ExtenV2_set_ultrasonic'] = function(block) {
   var dropdown_pin_echo = block.getFieldValue('pin_echo');
   var dropdown_pin_trig = block.getFieldValue('pin_trig');
-  var code = 'set_pin_ultrasonic(' + dropdown_pin_echo + ', ' + dropdown_pin_trig +');\n';
-  return code;
+  var code = `ultrasonic_Read(${dropdown_pin_echo},${dropdown_pin_trig})`;
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+  // var code = 'set_pin_ultrasonic(' + dropdown_pin_echo + ', ' + dropdown_pin_trig +');\n';
+  // return code;
 };
 Blockly.JavaScript['KB_ExtenV2_read_ultrasonic'] = function(block) {
+
     var code = `ultrasonic_Read()`;
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };

@@ -132,7 +132,6 @@ void motor(uint8_t ch,int speed){
     else{
       motor_control(8,speed); 
     }
-
   }
   else {
     if(speed > 0){
@@ -141,7 +140,6 @@ void motor(uint8_t ch,int speed){
     else {
       motor_control(9,speed); 
     }
-
   }
 }
 int analog_Read(uint8_t port_analog){
@@ -180,11 +178,12 @@ void set_pin_ultrasonic(uint8_t Echo_pin,uint8_t Trig_pin){
   //i2c_send(header);i2c_send(set_ultrasonic);i2c_send(Echo_pin);i2c_send(Trig_pin);
   delay(100);
 }
-int ultrasonic_Read(){
-    uint8_t buff_data[4] = {header,read_ultrasonic};
-    i2c_send_buff(buff_data,4);
-    //i2c_send(header);i2c_send(read_ultrasonic);
-    int data_ultrasonic = (i2c_request(2));
+int ultrasonic_Read(uint8_t Echo_pin,uint8_t Trig_pin){
+    //uint8_t buff_data[4] = {header,read_ultrasonic};
+  uint8_t buff_data[4] = {header,set_ultrasonic,Echo_pin,Trig_pin};
+  i2c_send_buff(buff_data,4);
+  //i2c_send(header);i2c_send(read_ultrasonic);
+  int data_ultrasonic = (i2c_request(2));
   //Serial.println(data_ultrasonic);
   return data_ultrasonic;
 }
@@ -297,18 +296,13 @@ void _Run_PID(int speed_motor_input,float kp,float ki,float kd){
     int speed_motor2 = speed_motor_input + output;
 
     if(speed_motor1 > max_output ) speed_motor1 = max_output;
-    else if(speed_motor1 < -max_output) speed_motor1 = -max_output + speed_motor_input;
+    else if(speed_motor1 < 0) speed_motor1 = 0;
 
     if(speed_motor2 > max_output ) speed_motor2 = max_output;
-    else if(speed_motor2 < -max_output) speed_motor2 = -max_output +speed_motor_input;
-
-    
-    if (output > max_output )output = max_output;
-    else if (output < -max_output)output = -max_output;
-
+    else if(speed_motor2 < 0) speed_motor2 = 0;
     motor(1,speed_motor1);
     motor(2,speed_motor2);
-     delay(10);
+    delay(1);
     previous_error = errors;
 }
 void _caribrate_Sensor_for_PID(int round){

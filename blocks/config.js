@@ -16,6 +16,7 @@ module.exports = [
             'KB_ExtenV2_digital_Write',
             'KB_ExtenV2_analog',
             'KB_ExtenV2_digital_Read',
+            'KB_ExtenV2_set_ultrasonic',
             
             {
                     xml : 
@@ -188,16 +189,16 @@ module.exports = [
                         </value>
                     </block>`
                 },
-                // {
-                //     xml : 
-                //     `<block type="KB_ExtenV2_motor">
-                //         <value name="speed">
-                //             <shadow type="math_number">
-                //                 <field name="NUM">50</field>
-                //             </shadow>
-                //         </value>
-                //     </block>`
-                // },
+                {
+                    xml : 
+                    `<block type="KB_ExtenV2_motor">
+                        <value name="speed">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
                 {
                     xml : 
                     `<block type="KB_ExtenV2_Servo_motor_Moving">

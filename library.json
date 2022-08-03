@@ -8,7 +8,7 @@
   "author": "PrinceBot",
   "email": "print081@gmail.com",
   "url": "https://github.com/PrinceBot-Ratthanin/KB_ExtenV2/",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "board" : "",
   "platform": ["arduino-esp32"],
   "image" : "/static/KB_Exten V2.PNG",

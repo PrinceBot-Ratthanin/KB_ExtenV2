@@ -56,6 +56,25 @@ Blockly.Blocks['KB_ExtenV2_motor'] = {
     this.setTooltip("");
   }
 };
+Blockly.Blocks['KB_ExtenV2_motor2CH'] = {
+  init: function() {
+    this.appendValueInput("speedA")
+      .setCheck("Number")
+      .appendField("MotorA at speed");
+    this.appendDummyInput()
+      .appendField("%");
+    this.appendValueInput("speedB")
+      .setCheck("Number")
+      .appendField("MotorB at speed");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#c7882a");
+    this.setTooltip("");
+  }
+};
 Blockly.Blocks['KB_ExtenV2_motor_move'] = {
   init: function() {
     this.appendDummyInput()
@@ -239,8 +258,7 @@ Blockly.Blocks['KB_ExtenV2_set_ultrasonic'] = {
                                             ["D5", "25"],
                                             ["D6", "24"]]), "pin_trig");
     this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
+    this.setOutput(true, "Number");
     this.setColour("#c7882a");
     this.setTooltip("");
   }
